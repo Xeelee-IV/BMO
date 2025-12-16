@@ -1,0 +1,2 @@
+# BMO
+Basic Discord Bot
