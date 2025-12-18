@@ -1,5 +1,6 @@
 import discord 
 from discord.ext import commands
+from discord import app_commands
 from discord.ext.commands import bot_has_permissions, BotMissingPermissions
 
 class Moderation(commands.Cog):
@@ -8,13 +9,16 @@ class Moderation(commands.Cog):
         self.bot = bot
 
         
-    # New Command for Kick
-    @commands.command(help="Kicks a member from the server.")
-    @bot_has_permissions(kick_members=True)
-    async def kick(self, ctx, member: discord.Member, *, reason=None):
 
-        await member.kick(reason=reason)
-        await ctx.send(f"user {member.display_name} has been kicked from the server. Reason: {reason or "None"}")
+    @commands.hybrid_command(name="kick", help="Kicks a member from the server.")
+    @commands.has_permissions(kick_members=True)
+    async def kick(self, ctx, member: discord.Member, *, reason: str = "No reason stated"):
+        try:
+            await member.kick(reason=reason)
+            await ctx.send(f"user {member.display_name} has been kicked from the server. Reason: {reason or ""}")
+        except discord.Forbidden:
+            await ctx.send("No permision for execution")
+
     
     @kick.error
     async def kick_error(self, ctx, error):
@@ -63,3 +67,4 @@ async def setup(bot):
 
 
     
+
