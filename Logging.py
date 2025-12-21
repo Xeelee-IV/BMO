@@ -24,17 +24,17 @@ class Logging(commands.Cog):
         if message.author.bot:
             return
 
-        embed = discord.Embed(
-            title="Message Deleted",
-            description=f"**Author:** {message.author.mention}\n**Channel:** {message.channel.mention}",
-            color=discord.Color.red(),
-            timestamp=datetime.datetime.utcnow()
-        )
-        embed.add_field(name="Content", value=message.content or "[No text content]", inline=False)
-        embed.set_footer(text=f"User ID: {message.author.id}")
-        
-        await self.emit_log(message.guild, embed)
+    embed = discord.Embed(
+        title = "Message Deleted",
+        description = f" Author: {message.author.mention}\n Channel: {message.channel.mention}",
+        color = discord.Color.red(),
+        timestamp = datetime.datetime.utcnow()
+    )
+    embed.add_field(name = "Content", value = message.content or "[No text content]", inline = False)
+    embed.set_footer(text = f"User ID: {message.author.id}")
+
+    await self.emit_log(message.guild, embed)
 
 async def setup(bot):
-
     await bot.add_cog(Logging(bot))
+
