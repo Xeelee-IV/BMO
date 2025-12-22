@@ -7,12 +7,9 @@ class Database:
 
     def create_tables(self):
         with self.conn:
-            self.conn.execute(''' CRAETE TABLE IF NOT EXISTS "Warnings" (
-                               "user_id" INTEGER,
-                               "guild_id" INTEGER,
-                               "warning_count" INTEGER,
-                               PRIMARY KEY ("user_id", "guild_id"))
-                              ''')
+            self.conn.execute('''CREATE TABLE IF NOT EXISTS warnings 
+                (user_id INTEGER, guild_id INTEGER, count INTEGER, PRIMARY KEY (user_id, guild_id))''')
+ 
     
     def add_warning(self, user_id, guild_id):
         with self.conn:
@@ -41,3 +38,4 @@ def reset_warnings(self, user_id, guild_id):
             (user_id, guild_id)
 
         )
+
